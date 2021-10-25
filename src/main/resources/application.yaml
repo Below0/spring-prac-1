@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/color_book?autoReconnect=true
+    username: project
+    password: project
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+
+server:
+  port: 8080
