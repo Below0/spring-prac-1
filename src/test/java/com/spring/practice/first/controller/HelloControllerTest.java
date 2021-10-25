@@ -9,8 +9,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 // import static: 변수, 메소드를 패키지, 클래스명 없이 접근가능하게 import하는 방식
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = HelloController.class)
@@ -21,10 +21,12 @@ public class HelloControllerTest {
 
     @Test
     public void getTest() throws Exception {
-        String hello = "Hello Spring!";
 
-        mvc.perform(get("/api"))
+        mvc.perform(get("/api")
+                        .param("name", "harvey")
+                        .param("amount", "10"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(hello));
+                .andExpect(jsonPath("$.name", is("harvey")))
+                .andExpect(jsonPath("$.amount", is(10)));
     }
 }
